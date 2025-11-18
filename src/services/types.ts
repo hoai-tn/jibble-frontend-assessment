@@ -18,7 +18,6 @@ export interface ApiResponse<T = unknown> {
   data: T
   status: number
   statusText: string
-  headers: Headers
 }
 
 export type RequestInterceptor = (config: RequestInit) => RequestInit | Promise<RequestInit>

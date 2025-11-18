@@ -5,10 +5,11 @@
       class="movie-search__input"
       clearable
       density="comfortable"
-      label="Search movies"
-      placeholder="Enter movie title or year..."
+      hide-details="auto"
+      placeholder="Search for movies... (e.g., Inception, 2010)"
       prepend-inner-icon="mdi-magnify"
       :rules="searchRules"
+      variant="solo"
       @clear="handleClear"
       @update:model-value="handleInput"
     />
@@ -33,7 +34,7 @@
 
   const props = withDefaults(defineProps<Props>(), {
     modelValue: '',
-    debounce: 300,
+    debounce: 400,
   })
 
   const emit = defineEmits<Emits>()
@@ -76,8 +77,51 @@
   width: 100%;
 
   &__input {
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
+
+    :deep(.v-field) {
+      border-radius: 50px;
+      box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.08),
+        0 1px 4px rgba(0, 0, 0, 0.04);
+      transition: all 0.3s ease;
+
+      &:hover {
+        box-shadow:
+          0 8px 30px rgba(0, 0, 0, 0.12),
+          0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+    }
+
+    :deep(.v-field--focused) {
+      box-shadow:
+        0 8px 40px rgba(var(--v-theme-primary), 0.15),
+        0 2px 12px rgba(var(--v-theme-primary), 0.1);
+      transform: translateY(-2px);
+    }
+
+    :deep(.v-field__input) {
+      font-size: 1rem;
+      padding: 12px 0;
+    }
+
+    :deep(.v-field__prepend-inner) {
+      padding-left: 8px;
+    }
+  }
+}
+
+// Dark mode adjustments
+@media (prefers-color-scheme: dark) {
+  .movie-search {
+    &__input {
+      :deep(.v-field) {
+        box-shadow:
+          0 4px 20px rgba(0, 0, 0, 0.3),
+          0 1px 4px rgba(0, 0, 0, 0.2);
+      }
+    }
   }
 }
 </style>

@@ -13,7 +13,7 @@ interface UseMoviesQueryOptions {
 }
 const KEY_QUERY = 'movies'
 export function useMoviesQuery ({ page, search }: UseMoviesQueryOptions) {
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, isFetching, error, refetch } = useQuery({
     queryKey: [KEY_QUERY, page, search],
     queryFn: async () => {
       const searchQuery = search.value.trim()
@@ -27,11 +27,13 @@ export function useMoviesQuery ({ page, search }: UseMoviesQueryOptions) {
   const total = computed(() => data.value?.total ?? 0)
   const currentPage = computed(() => data.value?.page ?? page.value)
 
+  // isLoading: true only when there's no data yet (initial load)
+  // isFetching: true whenever a request is in progress (including pagination)
   const initialLoading = computed(() => isLoading.value && !data.value)
 
   return {
     movies,
-    loading: isLoading,
+    loading: isFetching, // Use isFetching instead of isLoading for pagination
     initialLoading,
     error: computed(() => error.value?.message ?? null),
     currentPage,

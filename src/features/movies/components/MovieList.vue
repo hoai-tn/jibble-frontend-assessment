@@ -3,15 +3,13 @@
     <component
       :is="currentComponent"
       v-bind="componentProps"
-      @error-close="handleErrorClose"
+      @retry="handleRetry"
     />
   </v-container>
 </template>
 
 <script lang="ts" setup>
-  import type { Component } from 'vue'
   import type { Movie } from '@/types/movies'
-  import { computed } from 'vue'
   import MovieEmpty from './MovieEmpty.vue'
   import MovieError from './MovieError.vue'
   import MovieGrid from './MovieGrid.vue'
@@ -25,12 +23,11 @@
     searchQuery: string
   }
 
-  interface Emits {
-    (e: 'error-close'): void
-  }
-
   const props = defineProps<Props>()
-  const emit = defineEmits<Emits>()
+
+  const router = useRouter()
+
+  const { query } = useRoute()
 
   // Determine which component to render based on state
   const currentComponent = computed<Component>(() => {
@@ -48,7 +45,7 @@
     return { movies: props.movies }
   })
 
-  function handleErrorClose (): void {
-    emit('error-close')
+  function handleRetry (): void {
+    router.push({ query: { ...query, page: 1 } })
   }
 </script>

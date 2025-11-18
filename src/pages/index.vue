@@ -1,4 +1,13 @@
 <template>
+  <!-- Global Loading Progress Bar -->
+  <v-progress-linear
+    :active="loading"
+    class="loading-bar"
+    color="primary"
+    height="3"
+    :indeterminate="loading"
+  />
+
   <v-container class="movies-page">
     <v-row>
       <v-col cols="12">
@@ -16,7 +25,6 @@
           :loading="loading"
           :movies="movies"
           :search-query="urlSearch"
-          @error-close="() => {}"
         />
         <!-- Movie Pagination -->
         <MoviePagination
@@ -77,9 +85,17 @@
 </script>
 
 <style scoped lang="scss">
+.loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
+
 .movies-page {
   max-width: 1400px;
-  padding: 10px 16px;
+  padding: 0 16px;
 
   @media (min-width: 960px) {
     padding: 16px 32px;

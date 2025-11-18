@@ -3,7 +3,7 @@
     <v-container class="d-flex align-center">
       <v-toolbar-title class="d-flex align-center">
         <v-icon class="mr-2" icon="mdi-movie-open" size="large" />
-        <span class="text-h5 font-weight-bold">Jibble Movie</span>
+        <div class="text-h5 font-weight-bold d-none d-sm-inline">JIBBLE Movie</div>
       </v-toolbar-title>
 
       <v-spacer />
