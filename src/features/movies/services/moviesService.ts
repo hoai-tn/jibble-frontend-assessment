@@ -19,20 +19,22 @@ export async function getMovies (page = 1, search?: string): Promise<MovieApiRes
     throw new Error('Page number must be a positive integer')
   }
 
-  // Sanitize title input to prevent XSS
-  let sanitizedTitle: string | null
-  if (search) {
-    // Remove potentially dangerous characters and limit length
-    sanitizedTitle = search.trim().slice(0, 200).replace(/[<>]/g, '')
-  }
-
   // Build query parameters
   const params: MoviesQueryParams = { page }
 
-  if (!Number.isNaN(Number(sanitizedTitle)) && sanitizedTitle) {
-    params.Year = sanitizedTitle
-  } else if (sanitizedTitle) {
-    params.Title = sanitizedTitle
+  // Sanitize and add search parameter if provided
+  if (search) {
+    // Remove potentially dangerous characters and limit length
+    const sanitizedTitle = search.trim().slice(0, 200).replace(/[<>]/g, '')
+
+    if (sanitizedTitle) {
+      // Check if it's a year (number)
+      if (Number.isInteger(Number(sanitizedTitle))) {
+        params.Year = sanitizedTitle
+      } else {
+        params.Title = sanitizedTitle
+      }
+    }
   }
 
   // Build query string

@@ -1,0 +1,36 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+build
+.output
+
+# Cache
+.cache
+.vite
+.turbo
+
+# Auto-generated files
+*.d.ts
+auto-imports.d.ts
+components.d.ts
+typed-router.d.ts
+
+# Lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Environment files
+.env
+.env.*
+
+# IDE
+.vscode
+.idea
+
+# Other
+coverage
+*.log
+
