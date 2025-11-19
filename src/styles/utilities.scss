@@ -47,7 +47,6 @@
     // Large screens: 5 items per row
     display: flex !important;
     flex-wrap: wrap !important;
-    margin: -8px !important;
 
     .movie-grid__item {
       flex: 0 0 calc(20% - 16px) !important;

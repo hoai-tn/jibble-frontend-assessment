@@ -7,13 +7,7 @@
         cover
         height="300"
         :src="mockPosterUrl as string"
-      >
-        <template #error>
-          <div class="movie-card__no-image">
-            <v-icon color="grey-lighten-1" icon="mdi-image-off" size="64" />
-          </div>
-        </template>
-      </v-img>
+      />
       <v-chip class="movie-card__year-tag liquid-tag" size="small" variant="flat">
         {{ movie.Year }}
       </v-chip>
@@ -36,20 +30,17 @@
 
   defineProps<Props>()
 
-  // Dynamically import all mock posters (1-15)
   const mockPostersModules = import.meta.glob('@/assets/posters-mock/*.jpg', {
     eager: true,
     import: 'default',
   })
-
-  // Get a consistent mock poster (1-15) based on movie ID
+  // ** MOCK POSTERS WILL BE REPLACED WITH THE REAL POSTERS FROM THE API **
   const mockPosterUrl = computed(() => {
     const posterNumber = Math.floor(Math.random() * 15) + 1
-    // Find the matching poster path
     const posterPath = Object.keys(mockPostersModules).find(path =>
       path.includes(`/${posterNumber}.jpg`),
     )
-    return posterPath ? (mockPostersModules[posterPath]) : ''
+    return posterPath ? mockPostersModules[posterPath] : 'https://via.placeholder.com/150'
   })
 </script>
 

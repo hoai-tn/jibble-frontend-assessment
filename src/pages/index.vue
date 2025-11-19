@@ -7,18 +7,15 @@
     height="3"
     :indeterminate="loading"
   />
-
-  <v-container class="movies-page">
+  <v-container>
     <v-row>
       <v-col cols="12">
-        <!-- Movie Search -->
         <MovieSearch
           v-model="urlSearch"
           :loading="loading"
           @clear="handleClearSearch"
           @search="handleSearch"
         />
-        <!-- Movie List -->
         <MovieList
           :error="error"
           :initial-loading="initialLoading"
@@ -26,9 +23,8 @@
           :movies="movies"
           :search-query="urlSearch"
         />
-        <!-- Movie Pagination -->
         <MoviePagination
-          v-show="!initialLoading && movies.length > 0"
+          v-show="showPagination"
           :current-page="displayPage"
           :loading="loading"
           :pagination-info="paginationInfo"
@@ -48,19 +44,17 @@
   // constant
   const ITEMS_PER_PAGE = 10
 
-  // URL params management
+  // Composables
   const { page: urlPage, search: urlSearch, clearSearch } = useUrlParams()
 
-  // Fetch movies with Vue Query
   const { movies, loading, initialLoading, error, totalPages, total } = useMoviesQuery({
     page: urlPage,
     search: urlSearch,
   })
 
-  // Use URL page for immediate UI updates (optimistic)
-  const displayPage = computed(() => urlPage.value)
-
   // Computed
+  const displayPage = computed(() => urlPage.value)
+  const showPagination = computed(() => movies.value.length > 0 && error.value === null)
   const paginationInfo = computed(() => ({
     current: displayPage.value,
     total: totalPages.value,
@@ -81,6 +75,7 @@
 
   function handlePageChange (page: number): void {
     urlPage.value = page
+    window.scrollTo({ top: 64 })
   }
 </script>
 
@@ -93,12 +88,4 @@
   z-index: 9999;
 }
 
-.movies-page {
-  max-width: 1400px;
-  padding: 0 16px;
-
-  @media (min-width: 960px) {
-    padding: 16px 32px;
-  }
-}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="movie-search">
+  <v-container class="movie-search">
     <AppTextField
       v-model="searchValue"
       class="movie-search__input"
@@ -13,7 +13,7 @@
       @clear="handleClear"
       @update:model-value="handleInput"
     />
-  </div>
+  </v-container>
 </template>
 
 <script lang="ts" setup>
@@ -73,9 +73,8 @@
 </script>
 
 <style scoped lang="scss">
-.movie-search {
-  width: 100%;
 
+.movie-search {
   &__input {
     max-width: 700px;
     margin: 0 auto;
@@ -108,20 +107,8 @@
 
     :deep(.v-field__prepend-inner) {
       padding-left: 8px;
-    }
-  }
-}
-
-// Dark mode adjustments
-@media (prefers-color-scheme: dark) {
-  .movie-search {
-    &__input {
-      :deep(.v-field) {
-        box-shadow:
-          0 4px 20px rgba(0, 0, 0, 0.3),
-          0 1px 4px rgba(0, 0, 0, 0.2);
       }
     }
   }
-}
+
 </style>

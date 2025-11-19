@@ -2,13 +2,6 @@
   <div v-if="totalPages > 1" class="movie-pagination">
     <v-row justify="center">
       <v-col cols="12" md="auto">
-        <!-- Pagination Info -->
-        <div class="text-center text-body-2 text-medium-emphasis mb-3">
-          Showing {{ paginationInfo.start }} - {{ paginationInfo.end }} of
-          {{ paginationInfo.totalItems }} movies
-        </div>
-
-        <!-- Pagination Controls -->
         <AppPagination
           :disabled="loading"
           :model-value="currentPage"
@@ -43,14 +36,11 @@
 
   function handlePageChange (page: number): void {
     emit('page-change', page)
-
-    // Smooth scroll to top of page
-    window.scrollTo({ top: 64, behavior: 'smooth' })
   }
 </script>
 
 <style scoped lang="scss">
 .movie-pagination {
-  padding: 32px 0 16px;
+  padding: 10px 0 16px;
 }
 </style>

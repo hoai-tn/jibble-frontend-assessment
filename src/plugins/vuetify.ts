@@ -15,12 +15,12 @@ import 'vuetify/styles'
 const customDarkTheme: ThemeDefinition = {
   dark: true,
   colors: {
-    'background': 'hsl(222.2 84% 4.9%)',
-    'surface': 'hsl(0deg 0.01% 9.06%)',
+    'background': '#020817',
+    'surface': '#171717',
     'surface-variant': '#2A2A2A',
     'surface-bright': '#3A3A3A',
     'on-surface': '#FFFFFF',
-    'primary': 'hsl(221.2 83.2% 53.3%)',
+    'primary': '#ff6603',
     'primary-darken-1': '#5d5ad8',
     'secondary': '#03DAC6',
     'secondary-darken-1': '#00C4B4',

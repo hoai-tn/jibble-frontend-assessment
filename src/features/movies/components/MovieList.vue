@@ -1,14 +1,14 @@
 <template>
   <v-container>
     <component
-      :is="currentComponent"
-      v-bind="componentProps"
+      :is="view.component"
+      v-bind="view.props"
       @retry="handleRetry"
     />
   </v-container>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
   import type { Movie } from '@/types/movies'
   import MovieEmpty from './MovieEmpty.vue'
   import MovieError from './MovieError.vue'
@@ -24,28 +24,27 @@
   }
 
   const props = defineProps<Props>()
-
   const router = useRouter()
-
   const { query } = useRoute()
 
-  // Determine which component to render based on state
-  const currentComponent = computed<Component>(() => {
-    if (props.initialLoading) return MovieSkeleton
-    if (props.error) return MovieError
-    if (!props.loading && props.movies.length === 0) return MovieEmpty
-    return MovieGrid
+  const view = computed(() => {
+    // Show skeleton while loading
+    if (props.initialLoading)
+      return { component: MovieSkeleton, props: {} }
+
+    // Show error message if there is an error
+    if (props.error)
+      return { component: MovieError, props: { error: props.error } }
+
+    // Show empty message if there are no movies and not loading
+    if (!props.loading && props.movies.length === 0)
+      return { component: MovieEmpty, props: { searchQuery: props.searchQuery } }
+
+    // Show movies grid if there are movies and not loading
+    return { component: MovieGrid, props: { movies: props.movies } }
   })
 
-  // Dynamic props for the current component
-  const componentProps = computed(() => {
-    if (props.initialLoading) return {}
-    if (props.error) return { error: props.error }
-    if (!props.loading && props.movies.length === 0) return { searchQuery: props.searchQuery }
-    return { movies: props.movies }
-  })
-
-  function handleRetry (): void {
+  function handleRetry () {
     router.push({ query: { ...query, page: 1 } })
   }
 </script>
